@@ -1,0 +1,18 @@
+﻿  MUZEUM.c
+E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(109,9): warning C4013: 'getch' undefined; assuming extern returning int
+E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(801,18): warning C4047: '=': 'char' differs in levels of indirection from 'void *'
+E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(889,13): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(982,13): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(1309,24): warning C4033: 'show_by_name' must return a value
+E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(1445,7): warning C4047: 'initializing': 'char' differs in levels of indirection from 'void *'
+E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(1553,8): warning C4047: 'initializing': 'uchar' differs in levels of indirection from 'void *'
+E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(1662,15): warning C4047: 'function': 'char *' differs in levels of indirection from 'uchar (*)[265]'
+E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(1662,9): warning C4024: 'fgets': different types for formal and actual parameter 1
+E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(1756,72): warning C4474: 'printf' : too many arguments passed for format string
+E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(1756,72): message : placeholders and their parameters expect 0 variadic arguments, but 1 were provided
+  Generating code
+  1 of 41 functions ( 2.4%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    3 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  MUZEUM.vcxproj -> E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\x64\Release\MUZEUM.exe

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+
+<head>
+	<script type="text/javascript">
+		function Rand(tomax)
+{
+	return Math.floor(Math.random() * tomax);
+}
+
+
+function RandPep(stu, pre)
+{	
+	if (stu == null || pre == null) {
+	var outdiv = document.getElementById("preOUT");
+		outdiv.innerHTML = "<p>Function has no arguments</p>";
+		return;
+	}
+	var outdiv = document.getElementById("preOUT");
+	var output = outdiv.innerHTML;
+	
+		output += stu[Rand(stu.length)] + " " + pre[Rand(pre.length)] + "<br>";		
+		outdiv.innerHTML = output;
+
+}
+
+function RandDec(stu, pre, asd)
+{	
+	if (stu == null || pre == null) {
+	var outdiv = document.getElementById("preOUT");
+		outdiv.innerHTML = "<p>Function has no arguments</p>";
+		return;
+	}
+	var outdiv = document.getElementById("preOUT");
+	var output = outdiv.innerHTML;
+	
+		output += stu[Rand(stu.length)] + " " + pre[Rand(pre.length)] + " " + asd[Rand(asd.length)] + "<br>";		
+		outdiv.innerHTML = output;
+
+}
+
+function RandNum(li1, li2, li3)
+{	
+	var liczba = (Rand(li1) - li2) / li3;
+	var outdiv = document.getElementById("preOUT");
+	var output = outdiv.innerHTML;
+	
+		output += liczba + "<br>";		
+		outdiv.innerHTML = output;
+
+}
+
+function RandNumPlus(li1, li2, li3)
+{	
+	var liczba = (Rand(li1) + li2) / li3;
+	var outdiv = document.getElementById("preOUT");
+	var output = outdiv.innerHTML;
+	
+		output += liczba + "<br>";		
+		outdiv.innerHTML = output;
+
+}
+
+function RandOne(stu)
+{
+	var outdiv = document.getElementById("preOUT");
+	var output = outdiv.innerHTML;
+	
+		output += stu[Rand(stu.length)] + "<br>";		
+		outdiv.innerHTML = output;
+
+}
+
+	</script>
+</head>
+
+<body onload="">
+
+				<div class="center_right">
+					<input type="button" value="title" onclick="RandPep(['Wspaniale', 'Legendarne', 'Niesamowite', 'Starorzytne', 'Unikalne'], ['narzedzie', 'zdobienia', 'kosci', 'zbrojenie', 'uzbrojenie', 'ubrania', 'relikwie', 'kamienie szlachetne', 'takaniny']), RandPep(['Wspanialy', 'Legendarny', 'Niesamowity', 'Starorzytny', 'Unikalny'], ['czolg', 'pojazd', 'radar', 'szkielet', 'muszkiet', 'trebusz', 'miecz', 'arkebuz', 'szyszak'])">
+					
+					<input type="button" value="desc" onclick="RandDec(['Przedmiot ten jest unikatowy', 'Nikt by nie pomyslal ze to ma sens', 'Jego niesamowite wlasciwosci zostaly odkryte niedawno', 'Jego prostota zadziwia naukowcow', 'Zlozenie tego przedmiotu jest interesujace', 'Budowa jak na tamte lata zadziwia', 'Niesamowite w tym przedmiocie jest to jak dokladnie zostal on zaprojektowny', 'Dbalosc o szczegoly to malo powiedziane', 'Wielu nie moze okreslic jak zaawansowana jest to technologia', 'Zwykla rzecz a tyle mozliwosci o ktorych nie wielu pomyslalo'],['i moze sie wydawac ze naprawde istnieje', 'i nikt nie podejrzewal jak on dziala', 'i kazdy myslal ze nie sluzy niczemu', 'i dokladnosc wykonania udowadniaja jego przystosowanie do pracy ', 'i ta nietypowa budowa musiala oznaczac wiele dla wlascicieli ', 'i ta precyzja wykonania byla wykorzystywana w codziennym uzytku', 'i moze ta prosta budowa byla czyms czego wtedy oczekiwano', 'i kazdemu sie wydawalo ze to nie moze istniec', 'i nie wszyscy byli pewni dzialania', 'i moze to prawda co o nim mowiono'],['ale okazalo sie ze moze zostac uzyty nawet dzis.', 'ale nikt sie nie domyslal ze w prostocie tkwi szczegol.', 'ale jest to bardzo stary artefakt.', 'ale po odkryciu reszty fragmetow wszystko nabralo sensu.', 'ale wraz z badaniami wszsytko sie zmienilo.', 'ale po bacznych obserwacjach okazalo sie ze kazdy sie mylil.', 'ale wiele osob i tak chcialo go zobaczyc.', 'ale zlozonosc schematu nie pozwolila na jego dalsze dzialanie.', 'ale precyzja wykonania mowi co innego.', 'ale dalsze badania wykazaly skarzenie nuklearne na badanym obiekcie.'])">
+					
+					<input type="button" value="rok istnienia" onclick="RandNum(400,380,1), RandNum(4000,2000,1)">
+					
+					<input type="button" value="weight" onclick="RandNum(40000,0,100)">
+					
+					<input type="button" value="day" onclick="RandNum(32,0,1)">
+					
+					<input type="button" value="month" onclick="RandNumPlus(11,1,1)">
+					
+					<input type="button" value="year" onclick="RandNumPlus(10,2000,1)">
+					
+					<input type="button" value="state" onclick="RandOne(['A','B','C','D','E'])">
+					
+					<input type="button" value="room" onclick="RandNum(32,0,1)">
+					
+					<div id="preOUT"></div>			
+				</div>
+
+</body>
+
+</html>
+<!-- DISCLAIMER OWNED BY LUKE UNSUAL -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

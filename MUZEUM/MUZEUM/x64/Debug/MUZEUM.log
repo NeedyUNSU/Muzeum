@@ -1,0 +1,12 @@
+﻿  MUZEUM.c
+E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(128,14): warning C4013: 'getch' undefined; assuming extern returning int
+E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(860,13): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(953,13): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(1049,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(1391,24): warning C4033: 'show_by_name' must return a value
+E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(1638,15): warning C4047: 'function': 'char *' differs in levels of indirection from 'uchar (*)[265]'
+E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(1638,9): warning C4024: 'fgets': different types for formal and actual parameter 1
+E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(1714,72): warning C4474: 'printf' : too many arguments passed for format string
+E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(1714,72): message : placeholders and their parameters expect 0 variadic arguments, but 1 were provided
+E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(1413): warning C4715: 'show_by_name': not all control paths return a value
+  MUZEUM.vcxproj -> E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\x64\Debug\MUZEUM.exe
