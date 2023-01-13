@@ -1,18 +1,24 @@
 ﻿  MUZEUM.c
-E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(109,9): warning C4013: 'getch' undefined; assuming extern returning int
-E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(801,18): warning C4047: '=': 'char' differs in levels of indirection from 'void *'
-E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(889,13): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(982,13): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(1309,24): warning C4033: 'show_by_name' must return a value
-E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(1445,7): warning C4047: 'initializing': 'char' differs in levels of indirection from 'void *'
-E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(1553,8): warning C4047: 'initializing': 'uchar' differs in levels of indirection from 'void *'
-E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(1662,15): warning C4047: 'function': 'char *' differs in levels of indirection from 'uchar (*)[265]'
-E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(1662,9): warning C4024: 'fgets': different types for formal and actual parameter 1
-E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(1756,72): warning C4474: 'printf' : too many arguments passed for format string
-E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\MUZEUM\MUZEUM.c(1756,72): message : placeholders and their parameters expect 0 variadic arguments, but 1 were provided
-  Generating code
-  1 of 41 functions ( 2.4%) were compiled, the rest were copied from previous compilation.
+C:\Users\UNSU\source\repos\NeedyUNSU\Muzeum\MUZEUM\MUZEUM\MUZEUM.c(116,9): warning C4013: niezdefiniowany "getch"; przy założeniu, że extern zwraca int
+C:\Users\UNSU\source\repos\NeedyUNSU\Muzeum\MUZEUM\MUZEUM\MUZEUM.c(983,18): warning C4047: "=": "char" różni się w poziomach operatorów pośrednich od "void *"
+C:\Users\UNSU\source\repos\NeedyUNSU\Muzeum\MUZEUM\MUZEUM\MUZEUM.c(1071,13): warning C4267: "=": konwersja z "size_t" do "int", możliwa utrata danych
+C:\Users\UNSU\source\repos\NeedyUNSU\Muzeum\MUZEUM\MUZEUM\MUZEUM.c(1164,13): warning C4244: "=": konwersja z "double" do "float", możliwa utrata danych
+C:\Users\UNSU\source\repos\NeedyUNSU\Muzeum\MUZEUM\MUZEUM\MUZEUM.c(1491,24): warning C4033: "show_by_name" musi zwracać wartość
+C:\Users\UNSU\source\repos\NeedyUNSU\Muzeum\MUZEUM\MUZEUM\MUZEUM.c(1627,1): warning C4047: "inicjowanie": "char" różni się w poziomach operatorów pośrednich od "void *"
+C:\Users\UNSU\source\repos\NeedyUNSU\Muzeum\MUZEUM\MUZEUM\MUZEUM.c(1735,1): warning C4047: "inicjowanie": "uchar" różni się w poziomach operatorów pośrednich od "void *"
+C:\Users\UNSU\source\repos\NeedyUNSU\Muzeum\MUZEUM\MUZEUM\MUZEUM.c(1789,22): warning C4047: "funkcja": "char *" różni się w poziomach operatorów pośrednich od "int"
+C:\Users\UNSU\source\repos\NeedyUNSU\Muzeum\MUZEUM\MUZEUM\MUZEUM.c(1789,18): warning C4024: "strcpy": różne typy dla formalnego i rzeczywistego parametru 1
+C:\Users\UNSU\source\repos\NeedyUNSU\Muzeum\MUZEUM\MUZEUM\MUZEUM.c(1789,28): warning C4047: "funkcja": "const char *" różni się w poziomach operatorów pośrednich od "int"
+C:\Users\UNSU\source\repos\NeedyUNSU\Muzeum\MUZEUM\MUZEUM\MUZEUM.c(1789,24): warning C4024: "strcpy": różne typy dla formalnego i rzeczywistego parametru 2
+C:\Users\UNSU\source\repos\NeedyUNSU\Muzeum\MUZEUM\MUZEUM\MUZEUM.c(1778,13): warning C4267: "inicjowanie": konwersja z "size_t" do "int", możliwa utrata danych
+C:\Users\UNSU\source\repos\NeedyUNSU\Muzeum\MUZEUM\MUZEUM\MUZEUM.c(1779,10): warning C4267: "inicjowanie": konwersja z "size_t" do "int", możliwa utrata danych
+C:\Users\UNSU\source\repos\NeedyUNSU\Muzeum\MUZEUM\MUZEUM\MUZEUM.c(1887,15): warning C4047: "funkcja": "char *" różni się w poziomach operatorów pośrednich od "uchar (*)[265]"
+C:\Users\UNSU\source\repos\NeedyUNSU\Muzeum\MUZEUM\MUZEUM\MUZEUM.c(1887,9): warning C4024: "fgets": różne typy dla formalnego i rzeczywistego parametru 1
+C:\Users\UNSU\source\repos\NeedyUNSU\Muzeum\MUZEUM\MUZEUM\MUZEUM.c(1981,72): warning C4474: „printf”: przekazano za dużo argumentów dla ciągu formatowania
+C:\Users\UNSU\source\repos\NeedyUNSU\Muzeum\MUZEUM\MUZEUM\MUZEUM.c(1981,72): message : symbole zastępcze i ich parametry oczekują 0 argumentów ze zmienną liczbą argumentów, ale podano następującą liczbę zmiennych argumentów: 1
+  Trwa generowanie kodu
+  2 of 42 functions ( 4.8%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    3 functions had inline decision re-evaluated but remain unchanged
-  Finished generating code
-  MUZEUM.vcxproj -> E:\$class_work\SCHOOL\script\Visualstudio scripts\MUZEUM\x64\Release\MUZEUM.exe
+    0 functions had inline decision re-evaluated but remain unchanged
+  Zakończono generowanie kodu
+  MUZEUM.vcxproj -> C:\Users\UNSU\source\repos\NeedyUNSU\Muzeum\MUZEUM\x64\Release\MUZEUM.exe

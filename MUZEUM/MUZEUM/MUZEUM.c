@@ -1,7 +1,7 @@
 ﻿#pragma warning(disable : 4996)
 #define _USE_MATH_DEFINES
 
-/*++ BUILD Version: 0.0    
+/*++ BUILD Version: 0.0
 
 Copyright (c) Łukasz Wyszomierski. All rights reserved.
 
@@ -53,17 +53,17 @@ struct lib
 };
 
 // List operations
-int show(lib* tab, bool colapse);                  // function that simply display information about exhibit if something exits
-void show_by_id(lib* tab, ulint id, bool colapse); // function that display information about exhibit by id assigned in startup
-void show_all_list(lib* tab, bool colapse);        // function that simply display all exhibits from list if something exits
-lib* add_lib(lib* tab, uchar title[], 			   // /*
-	uchar desc[], slint yearofEXISTENCE, 		   // 
-	bool century, float weight, usint day, 		   // adding new record to current list if empty creating new list
-	usint month, usint year, uchar state, 		   // 
-	usint room); 					   			   // */
-lib* remove_val_lib(lib* tab, ulint id);           // remove one value from db by id
-void edit_val_lib(lib* tab, ulint id);			   // edit current record
-lib* free_lib(lib* tab);                           // remove all records
+int show(lib* tab, bool colapse);                          // function that simply display information about exhibit if something exits
+void show_by_id(lib* tab, ulint id, bool colapse);         // function that display information about exhibit by id assigned in startup
+void show_all_list(lib* tab, bool colapse);                // function that simply display all exhibits from list if something exits
+lib* add_lib(lib* tab, uchar title[], 			           // /*
+	uchar desc[], slint yearofEXISTENCE, 		           // 
+	bool century, float weight, usint day, 		           // adding new record to current list if empty creating new list
+	usint month, usint year, uchar state, 		           // 
+	usint room); 					   			           // */
+lib* remove_val_lib(lib* tab, ulint id);                   // remove one value from db by id
+void edit_val_lib(lib* tab, ulint id, int edit_one_value); // edit current record
+lib* free_lib(lib* tab);                                   // remove all records
 
 // File operations
 lib* load_lib_from_file(char fname[]);             // load all current records from file 
@@ -89,15 +89,16 @@ usint get_month_from_user();		               // please user to give a specific d
 usint get_year_from_user();			               // please user to give a specific data with special protection [year]
 uchar get_state_from_user();		               // please user to give a specific data with special protection [state]
 usint get_room_from_user();			               // please user to give a specific data with special protection [room]
+int str_cmp_ch(char strT[], char strP[]);
 
 // Menu operations
-void user_get_by_id(lib* tab);	  // user activity to show record by id
-void user_edit_by_id(lib* tab);	  // user activity to edit record by id
-lib* user_remove_by_id(lib* tab); // user activity to remove one record from db by id
-void user_find_name(lib* tab);	  // user activity to find exactly name of exhibit
-void user_find_century(lib* tab); // user activity to find exhibit by century
-void user_find_date(lib* tab);	  // user activity to find date of adding exhibit to db
-void user_find_room(lib* tab);	  // user activity to find exhibit by room number
+void user_get_by_id(lib* tab);	                              // user activity to show record by id
+void user_edit_by_id(lib* tab, ulint id, int edit_one_value); // user activity to edit record by id
+lib* user_remove_by_id(lib* tab);                             // user activity to remove one record from db by id
+void user_find_name(lib* tab);	                              // user activity to find exactly name of exhibit
+void user_find_century(lib* tab);                             // user activity to find exhibit by century
+void user_find_date(lib* tab);	                              // user activity to find date of adding exhibit to db
+void user_find_room(lib* tab);	                              // user activity to find exhibit by room number
 
 int main()
 {
@@ -112,7 +113,7 @@ int main()
 		SetConsoleTitle(L"Witaj w programie lokalnym Muzeum! - brak bazy danych");
 		system("cls");
 		printf("\n\nPlik bazy danych jest pusty!\n\nKliknij [1] aby dodac nowy rekord lub kliknij dowolny przycisk aby zamknac program... ");
-		num = getch(); 
+		num = getch();
 		switch (num)
 		{
 		case '1':
@@ -124,7 +125,7 @@ int main()
 				getch();
 				master = user_add_to_lib(master);
 			} while (master == NULL);
-			
+
 			//save_lib_to_file(LIB_NAME, master); // saving db to file
 			break;
 		default:
@@ -142,7 +143,7 @@ int main()
 		printf("\n\nBibioteka wczytana poprawnie!\n\n\n");
 		Sleep(1250);
 	}
-	
+
 	do
 	{
 		SetConsoleTitle(L"Witaj w programie lokalnym Muzeum! - Menu Glowne Muzeum");
@@ -254,15 +255,117 @@ int main()
 				goto opt2;
 
 			case '2':
-				num = '\0';
 				faultdetect = false;
-				SetConsoleTitle(L"Witaj w programie lokalnym Muzeum! - Edycja Rekordu Przez ID");
+			opt5:
+				if (length_list == 0)
+				{
+					printf("\n\nNie istnieje zaden rekord!\n\n");
+					getch();
+					goto opt2;
+				}
+				ulint id = get_id_from_user();
+			opt4:
+				num = '\0';
+				SetConsoleTitle(L"Witaj w programie lokalnym Muzeum! - Edycja Eksponatu");
 				system("cls");
-				user_edit_by_id(master);
-				printf("\nKilinij dowolny przycisk aby kontynuowac...");
-				getch();
-				goto opt2;
+				printf("\n\n<*>==== -Edycja-Eksponatu-o-ID-%d- ====<*>\n", id); // Exhibit editor menu
+				printf("1) Edytuj tytul\n");					                // Exhibit editor menu
+				printf("2) Edytuj opis\n");					                    // Exhibit editor menu
+				printf("3) Edytuj rok/stulecie odkrycia\n");	                // Exhibit editor menu
+				printf("4) Edytuj wage\n");					                    // Exhibit editor menu
+				printf("5) Edytuj date dodania do bazy danych\n");              // Exhibit editor menu
+				printf("6) Edytuj stan\n");  					                // Exhibit editor menu
+				printf("7) Edytuj sale\n");					                    // Exhibit editor menu
+				printf("8) Edytuj wszystkie dane\n");			                // Exhibit editor menu
+				printf("9) Zmien aktualne id\n");                               // Exhibit editor menu
+				printf("0) Powrot\n\n");							            // Exhibit editor menu
 
+				if (faultdetect) printf("Opcja bledna wybierz jeszcze raz aby kontynuowac:"); else printf("Wybierz opcje aby kontynuowac:");
+				num = getch(); // get from user option from menu
+				switch (num)
+				{
+				case '1':
+					num = '\0';
+					faultdetect = false;
+					SetConsoleTitle(L"Witaj w programie lokalnym Muzeum! - Edycja Tytulu Przez ID");
+					system("cls");
+					user_edit_by_id(master, id, 1);
+					printf("\nKilinij dowolny przycisk aby kontynuowac...");
+					getch();
+					goto opt4;
+				case '2':
+					num = '\0';
+					faultdetect = false;
+					SetConsoleTitle(L"Witaj w programie lokalnym Muzeum! - Edycja Opisu Przez ID");
+					system("cls");
+					user_edit_by_id(master, id, 2);
+					printf("\nKilinij dowolny przycisk aby kontynuowac...");
+					getch();
+					goto opt4;
+				case '3':
+					num = '\0';
+					faultdetect = false;
+					SetConsoleTitle(L"Witaj w programie lokalnym Muzeum! - Edycja Roku/Stulecia Odkrycia Przez ID");
+					system("cls");
+					user_edit_by_id(master, id, 3);
+					printf("\nKilinij dowolny przycisk aby kontynuowac...");
+					getch();
+					goto opt4;
+				case '4':
+					num = '\0';
+					faultdetect = false;
+					SetConsoleTitle(L"Witaj w programie lokalnym Muzeum! - Edycja Wagi Przez ID");
+					system("cls");
+					user_edit_by_id(master, id, 4);
+					printf("\nKilinij dowolny przycisk aby kontynuowac...");
+					getch();
+					goto opt4;
+				case '5':
+					num = '\0';
+					faultdetect = false;
+					SetConsoleTitle(L"Witaj w programie lokalnym Muzeum! - Edycja Daty Dodania Do Zbioru Przez ID");
+					system("cls");
+					user_edit_by_id(master, id, 5);
+					printf("\nKilinij dowolny przycisk aby kontynuowac...");
+					getch();
+					goto opt4;
+				case '6':
+					num = '\0';
+					faultdetect = false;
+					SetConsoleTitle(L"Witaj w programie lokalnym Muzeum! - Edycja Statusu Przez ID");
+					system("cls");
+					user_edit_by_id(master, id, 6);
+					printf("\nKilinij dowolny przycisk aby kontynuowac...");
+					getch();
+					goto opt4;
+				case '7':
+					num = '\0';
+					faultdetect = false;
+					SetConsoleTitle(L"Witaj w programie lokalnym Muzeum! - Edycja Sali Przez ID");
+					system("cls");
+					user_edit_by_id(master, id, 7);
+					printf("\nKilinij dowolny przycisk aby kontynuowac...");
+					getch();
+					goto opt4;
+				case '8':
+					num = '\0';
+					faultdetect = false;
+					SetConsoleTitle(L"Witaj w programie lokalnym Muzeum! - Edycja Calego Rekordu Przez ID");
+					system("cls");
+					user_edit_by_id(master, id, 0);
+					printf("\nKilinij dowolny przycisk aby kontynuowac...");
+					getch();
+					goto opt4;
+				case '9':
+					goto opt5;
+				case '0':
+					goto opt2;
+
+				default:
+					faultdetect = true; // when user push other button he should
+					goto opt4;
+					break;
+				}
 			case '3':
 				num = '\0';
 				faultdetect = false;
@@ -438,8 +541,8 @@ void show_all_list(lib* tab, bool colapse) // show entire database
 	}
 
 	if (!colapse) printf("\n\n<*>= -Lista-Eksponatow-Wersja-Skrocona- =<*>\n\n");
-	if (colapse) printf("\n\n<*>=== -Lista-Eksponatow-Szczegolowa- ==<*>\n\n"); 
-	
+	if (colapse) printf("\n\n<*>=== -Lista-Eksponatow-Szczegolowa- ==<*>\n\n");
+
 	while (tab != NULL)
 	{
 		show(tab, colapse);
@@ -449,7 +552,7 @@ void show_all_list(lib* tab, bool colapse) // show entire database
 	if (colapse)  printf("<*>=== -Lista-Eksponatow-Szczegolowa- ==<*>\n");
 	if (!colapse) printf("<*>= -Lista-Eksponatow-Wersja-Skrocona- =<*>\n");
 
-	
+
 	return;
 }
 
@@ -563,7 +666,7 @@ lib* remove_val_lib(lib* tab, ulint id) // remove one value from db
 }
 
 
-void edit_val_lib(lib* tab, ulint id) // user editing one recored from db
+void edit_val_lib(lib* tab, ulint id, int edit_one_val) // user editing one recored from db
 {
 	if (tab == NULL) return; // if list is empty
 
@@ -584,231 +687,304 @@ void edit_val_lib(lib* tab, ulint id) // user editing one recored from db
 			int buf = 0;						    // buf integer to count overflow data and choosing state of exhibit
 			bool faildetected = false;				// buf bool for detecting fail of writing
 			bool epoch = false;						// buf bool for year that is p.n.e.
-				      
-			do // security gate testing for overflow
+
+			if (edit_one_val < 0 && edit_one_val > 7)
 			{
-				system("cls");
-				if (buf <= 1)
+				return;
+			}
+			else
+			{
+				if (edit_one_val != 1) strcpy(title, tab->title);
+				if (edit_one_val != 2) strcpy(descr, tab->descr);
+				if (edit_one_val != 3)
 				{
-					buf++;
-					faildetected = false;
+					yearofexistence = tab->yearofexistence;
+					century = tab->century;
 				}
-
-				if (faildetected) printf("* Podany tytul jest nie poprawny wpisz go jeszcze raz *");
-				printf("\n\n");
-
-				printf("Aktualny tytul: \"%s\"\n-> Podaj nowy (maksymalnie %d znakow): ", tab->title, LIM_CHAR);
-				fgets(title, LIM_CHAR + OVERFLOW_CHAR, stdin);
-
-				if (strlen(title) > LIM_CHAR)
+				if (edit_one_val != 4) weight = tab->weight;
+				if (edit_one_val != 5)
 				{
-					scanf("%*[^\n]"); scanf("%*c"); // clearing overflow of characters
+					day = tab->day;
+					month = tab->month;
+					year = tab->year;
 				}
+				if (edit_one_val != 6) state = tab->state;
+				if (edit_one_val != 7) room = tab->room;
+			}
 
-				if (title[strlen(title) - 1] == '\n') title[strlen(title) - 1] = '\0';
+			if (edit_one_val == 0 || edit_one_val == 1)
+			{
+				do // security gate testing for overflow
+				{
+					system("cls");
+					if (buf <= 1)
+					{
+						buf++;
+						faildetected = false;
+					}
 
-				if (strlen(title) < 1 || strlen(title) > LIM_CHAR) faildetected = true; else faildetected = false;
-			} while (faildetected);
+					if (faildetected) printf("* Podany tytul jest nie poprawny wpisz go jeszcze raz *");
+					printf("\n\n");
+
+					printf("Aktualny tytul: \"%s\"\n-> Podaj nowy (maksymalnie %d znakow): ", tab->title, LIM_CHAR);
+					fgets(title, LIM_CHAR + OVERFLOW_CHAR, stdin);
+
+					if (strlen(title) > LIM_CHAR)
+					{
+						scanf("%*[^\n]"); scanf("%*c"); // clearing overflow of characters
+					}
+
+					if (title[strlen(title) - 1] == '\n') title[strlen(title) - 1] = '\0';
+
+					if (strlen(title) < 1 || strlen(title) > LIM_CHAR) faildetected = true; else faildetected = false;
+				} while (faildetected);
+			}
 			buf = INT_MIN;
 
-			do // security gate testing for overflow
+			if (edit_one_val == 0 || edit_one_val == 2)
 			{
-				system("cls");
-
-				if (faildetected) printf("* Podany opis jest nie poprawny wpisz go jeszcze raz *");
-				printf("\n\n");
-
-				printf("Aktualny opis: \"%s\"\n-> Podaj nowy (maksymalnie %d znakow): ", tab->descr, LIM_CHAR);
-				fgets(descr, LIM_CHAR + OVERFLOW_CHAR, stdin);
-
-				if (strlen(descr) > LIM_CHAR)
+				do // security gate testing for overflow
 				{
-					scanf("%*[^\n]"); scanf("%*c"); // clearing overflow of characters
-				}
+					system("cls");
 
-				if (descr[strlen(descr) - 1] == '\n') descr[strlen(descr) - 1] = '\0';
+					if (faildetected) printf("* Podany opis jest nie poprawny wpisz go jeszcze raz *");
+					printf("\n\n");
 
-				if (strlen(descr) < 1 || strlen(descr) > LIM_CHAR) faildetected = true; else faildetected = false;
-			} while (faildetected);
+					printf("Aktualny opis: \"%s\"\n-> Podaj nowy (maksymalnie %d znakow): ", tab->descr, LIM_CHAR);
+					fgets(descr, LIM_CHAR + OVERFLOW_CHAR, stdin);
 
-			do // security gate testing for overflow
+					if (strlen(descr) > LIM_CHAR)
+					{
+						scanf("%*[^\n]"); scanf("%*c"); // clearing overflow of characters
+					}
+
+					if (descr[strlen(descr) - 1] == '\n') descr[strlen(descr) - 1] = '\0';
+
+					if (strlen(descr) < 1 || strlen(descr) > LIM_CHAR) faildetected = true; else faildetected = false;
+				} while (faildetected);
+			}
+
+			if (edit_one_val == 0 || edit_one_val == 3)
 			{
-				system("cls");
+				do // security gate testing for overflow
+				{
+					system("cls");
 
-				if (faildetected) printf("* Podany rok odkrycia / stulecie jest nie poprawne wpisz go jeszcze raz *");
-				printf("\n\n");
+					if (faildetected) printf("* Podany rok odkrycia / stulecie jest nie poprawne wpisz go jeszcze raz *");
+					printf("\n\n");
 
-				printf("Aktualny rok odkrycia / stulecie (liczba ujemna oznacza p.n.e.): \"%d\"\n-> Podaj nowy: ", tab->yearofexistence);
-				scanf("%li", &yearofexistence);
+					printf("Aktualny rok odkrycia / stulecie (liczba ujemna oznacza p.n.e.): \"%d\"\n-> Podaj nowy: ", tab->yearofexistence);
+					scanf("%li", &yearofexistence);
 
-				if (yearofexistence > EXISTENCE_LIM_MAX || yearofexistence < EXISTENCE_LIM_MIN) faildetected = true; else faildetected = false;
-			} while (faildetected);
+					if (yearofexistence > EXISTENCE_LIM_MAX || yearofexistence < EXISTENCE_LIM_MIN) faildetected = true; else faildetected = false;
+				} while (faildetected);
+
+				do // security gate testing for overflow
+				{
+					system("cls");
+
+					if (faildetected) printf("* Podana odpowiedz jest nie poprawna wpisz ja jeszcze raz *");
+					printf("\n\n");
+
+					scanf("%c", &letter);
+
+					printf("Wartosc \"%d\" ", tab->yearofexistence);
+					if (!tab->century) printf("nie");
+
+					printf(" jest zapisana jako stulecie.\nNowa wartosc wynosi \"%d\".\n", yearofexistence);
 
 
-			do // security gate testing for overflow
+					printf("\n-> Czy nowa wartosc zapisywac jako stulecie (y/n): ");
+					scanf("%c", &letter);
+
+					if (tolower(letter) != 'y' && tolower(letter) != 'n') faildetected = true; else faildetected = false;
+
+				} while (faildetected);
+
+				if (tolower(letter) == 'y') century = true; else century = false;
+			}
+
+
+
+			if (edit_one_val == 0 || edit_one_val == 4)
 			{
-				system("cls");
+				do // security gate testing for overflow
+				{
+					system("cls");
 
-				if (faildetected) printf("* Podana odpowiedz jest nie poprawna wpisz ja jeszcze raz *");
-				printf("\n\n");
+					if (faildetected) printf("* Podana waga jest nie poprawna wpisz ja jeszcze raz *");
+					printf("\n\n");
 
-				scanf("%c", &letter);
+					printf("Aktualna waga: \"%.2f\"\n-> Podaj nowa: ", tab->weight);
+					scanf("%f", &weight);
 
-				printf("Wartosc \"%d\" ", tab->yearofexistence);
-				if (!tab->century) printf("nie");
-
-				printf(" jest zapisana jako stulecie.\nNowa wartosc wynosi \"%d\".\n", yearofexistence);
-
-
-				printf("\n-> Czy nowa wartosc zapisywac jako stulecie (y/n): ");
-				scanf("%c", &letter);
-
-				if (tolower(letter) != 'y' && tolower(letter) != 'n') faildetected = true; else faildetected = false;
-
-			} while (faildetected);
-
-			if (tolower(letter) == 'y') century = true; else century = false;
+					if (weight <= 0) faildetected = true; else faildetected = false;
+				} while (faildetected);
+			}
 
 
-
-			do // security gate testing for overflow
+			if (edit_one_val == 0 || edit_one_val == 5)
 			{
-				system("cls");
+				do // security gate testing for overflow
+				{
+					system("cls");
 
-				if (faildetected) printf("* Podana waga jest nie poprawna wpisz ja jeszcze raz *");
-				printf("\n\n");
+					if (faildetected) printf("* Podany dzien jest nie poprawny wpisz go jeszcze raz *");
+					printf("\n\n");
 
-				printf("Aktualna waga: \"%.2f\"\n-> Podaj nowa: ", tab->weight);
-				scanf("%f", &weight);
+					printf("Aktualny dzien dodania do bazy: \"%d\"\n-> Podaj nowa: ", tab->day);
+					scanf("%hu", &day);
 
-				if (weight <= 0) faildetected = true; else faildetected = false;
-			} while (faildetected);
+					if (day <= 0 || day > LIM_DAY) faildetected = true; else faildetected = false;
+				} while (faildetected);
+
+				do // security gate testing for overflow
+				{
+					system("cls");
+
+					if (faildetected) printf("* Podany miesiac jest nie poprawny wpisz go jeszcze raz *");
+					printf("\n\n");
+
+					printf("Aktualny miesiac dodania do bazy: \"%d\"\n-> Podaj nowy: ", tab->month);
+					scanf("%hu", &month);
+
+					if (month <= 0 || month > LIM_MONTH) faildetected = true; else faildetected = false;
+				} while (faildetected);
+
+				do // security gate testing for overflow
+				{
+					system("cls");
+
+					if (faildetected) printf("* Podany dzien jest nie poprawny wpisz go jeszcze raz *");
+					printf("\n\n");
+
+					printf("Aktualny rok dodania do bazy (%d-%d): \"%d\"\n-> Podaj nowy: ", LIM_YEAR_MIN, LIM_YEAR_MAX, tab->year);
+					scanf("%hu", &year);
+
+					if (year < LIM_YEAR_MIN || year > LIM_YEAR_MAX) faildetected = true; else faildetected = false;
+				} while (faildetected);
+			}
 
 
-			do // security gate testing for overflow
+			if (edit_one_val == 0 || edit_one_val == 6)
 			{
-				system("cls");
+				do // security gate testing for overflow
+				{
+					system("cls");
 
-				if (faildetected) printf("* Podany dzien jest nie poprawny wpisz go jeszcze raz *");
-				printf("\n\n");
+					if (faildetected) printf("* Podany stan jest nie poprawny wpisz go jeszcze raz *");
+					printf("\n\n");
 
-				printf("Aktualny dzien dodania do bazy: \"%d\"\n-> Podaj nowa: ", tab->day);
-				scanf("%hu", &day);
+					printf("Aktualny stan: %d\n-> Podaj nowy (1-5) [1 - nienaruszone / 5 - zniszczone]: ", (int)(tab->state) - 64);
+					scanf("%d", &buf);
 
-				if (day <= 0 || day > LIM_DAY) faildetected = true; else faildetected = false;
-			} while (faildetected);
+					if (buf < 1 || buf > 5) faildetected = true; else faildetected = false;
+				} while (faildetected);
+				state = buf + 64;
+			}
 
 
-			do // security gate testing for overflow
+			if (edit_one_val == 0 || edit_one_val == 7)
 			{
-				system("cls");
+				do // security gate testing for overflow
+				{
+					system("cls");
 
-				if (faildetected) printf("* Podany miesiac jest nie poprawny wpisz go jeszcze raz *");
-				printf("\n\n");
+					if (faildetected) printf("* Podane polozenie jest nie poprawne wpisz je jeszcze raz *");
+					printf("\n\n");
 
-				printf("Aktualny miesiac dodania do bazy: \"%d\"\n-> Podaj nowy: ", tab->month);
-				scanf("%hu", &month);
+					printf("Aktualne polozenie [0 oznacza magazyn]: %d\n-> Podaj nowe polozenie (0-%d): ", tab->room, LIM_ROOM);
+					scanf("%hu", &room);
 
-				if (month <= 0 || month > LIM_MONTH) faildetected = true; else faildetected = false;
-			} while (faildetected);
+					if (room < 0 || room > LIM_ROOM) faildetected = true; else faildetected = false;
+				} while (faildetected);
+			}
 
-
-			do // security gate testing for overflow
-			{
-				system("cls");
-
-				if (faildetected) printf("* Podany dzien jest nie poprawny wpisz go jeszcze raz *");
-				printf("\n\n");
-
-				printf("Aktualny rok dodania do bazy (%d-%d): \"%d\"\n-> Podaj nowy: ", LIM_YEAR_MIN, LIM_YEAR_MAX, tab->year);
-				scanf("%hu", &year);
-
-				if (year < LIM_YEAR_MIN || year > LIM_YEAR_MAX) faildetected = true; else faildetected = false;
-			} while (faildetected);
-
-
-			do // security gate testing for overflow
-			{
-				system("cls");
-
-				if (faildetected) printf("* Podany stan jest nie poprawny wpisz go jeszcze raz *");
-				printf("\n\n");
-
-				printf("Aktualny stan: %d\n-> Podaj nowy (1-5) [1 - nienaruszone / 5 - zniszczone]: ", (int)(tab->state) - 64);
-				scanf("%d", &buf);
-
-				if (buf < 1 || buf > 5) faildetected = true; else faildetected = false;
-			} while (faildetected);
-			state = buf + 64;
-
-
-			do // security gate testing for overflow
-			{
-				system("cls");
-
-				if (faildetected) printf("* Podane polozenie jest nie poprawne wpisz je jeszcze raz *");
-				printf("\n\n");
-
-				printf("Aktualne polozenie [0 oznacza magazyn]: %d\n-> Podaj nowe polozenie (0-%d): ", tab->room, LIM_ROOM);
-				scanf("%hu", &room);
-
-				if (room < 0 || room > LIM_ROOM) faildetected = true; else faildetected = false;
-			} while (faildetected);
-			
 			do // displaying final result
 			{
 				system("cls");
 				printf("\n\n<*>=========== -Podsumowanie- ==========<*>\n");
-				printf("-> Stary tytul:\"%s\" \n-> Nowy tytul:\"%s\" \n-> Stary opis:\"%s\" \n-> Nowy opis:\"%s\" \n-> Odnaleziony ", tab->title, title, tab->descr, descr);
-
-				if (tab->century) printf("w stuleciu: "); else printf("w roku: ");
-				if (tab->yearofexistence < 0)
+				if (edit_one_val == 0 || edit_one_val == 1)
 				{
-					epoch = true;
-					tab->yearofexistence *= (-1);
-				}
-				printf("%d ", tab->yearofexistence);
-
-				if (epoch)
-				{
-					tab->yearofexistence *= (-1);
-					printf("p.n.e.");
-				}
-				else printf("n.e.");
-				printf(" => Odnaleziony ");
-
-				if (century) printf("w stuleciu: "); else printf("w roku: ");
-
-				epoch = false;
-
-				if (yearofexistence < 0)
-				{
-					epoch = true;
-					yearofexistence *= (-1);
+					printf("-> Stary tytul:\"%s\" \n-> Nowy tytul:\"%s\" \n", tab->title, title);
 				}
 
-				printf("%d ", yearofexistence);
-
-				if (epoch)
+				if (edit_one_val == 0 || edit_one_val == 2)
 				{
-					yearofexistence *= (-1);
-					printf("p.n.e.");
+					printf("-> Stary opis:\"%s\" \n-> Nowy opis:\"%s\" \n", tab->descr, descr);
 				}
-				else printf("n.e.");
 
-				printf("\n-> Waga: %.2f =>  %.2f \n-> Data doadania do zbioru [DD-MM-YYYY]: %d-%d-%d => %d-%d-%d\n-> Stan uszkodzenia [1 - nienaruszony / 5 - zniszczony]: %d => %d\n-> Miejsce przebywania: ", tab->weight, weight, tab->day, tab->month, tab->year, day, month, year, (int)(tab->state) - 64, (int)state - 64);
+				if (edit_one_val == 0 || edit_one_val == 3)
+				{
+					printf("-> Odnaleziony ");
+					if (tab->century) printf("w stuleciu: "); else printf("w roku: ");
+					if (tab->yearofexistence < 0)
+					{
+						epoch = true;
+						tab->yearofexistence *= (-1);
+					}
+					printf("%d ", tab->yearofexistence);
 
-				if (tab->room == 0) printf("Magazyn"); else printf("sala nr %d", tab->room);
+					if (epoch)
+					{
+						tab->yearofexistence *= (-1);
+						printf("p.n.e.");
+					}
+					else printf("n.e.");
+					printf(" => Odnaleziony ");
 
-				printf(" => ");
+					if (century) printf("w stuleciu: "); else printf("w roku: ");
 
-				if (room == 0) printf("Magazyn"); else printf("sala nr %d", room);
+					epoch = false;
+
+					if (yearofexistence < 0)
+					{
+						epoch = true;
+						yearofexistence *= (-1);
+					}
+
+					printf("%d ", yearofexistence);
+
+					if (epoch)
+					{
+						yearofexistence *= (-1);
+						printf("p.n.e.");
+					}
+					else printf("n.e.");
+				}
+
+
+				if (edit_one_val == 0 || edit_one_val == 4)
+				{
+					printf("\n-> Waga: %.2f =>  %.2f \n", tab->weight, weight);
+				}
+
+				if (edit_one_val == 0 || edit_one_val == 5)
+				{
+					printf("-> Data doadania do zbioru [DD-MM-YYYY]: %d-%d-%d => %d-%d-%d\n", tab->day, tab->month, tab->year, day, month, year);
+				}
+
+				if (edit_one_val == 0 || edit_one_val == 6)
+				{
+					printf("-> Stan uszkodzenia [1 - nienaruszony / 5 - zniszczony]: %d => %d\n", (int)(tab->state) - 64, (int)state - 64);
+				}
+
+				if (edit_one_val == 0 || edit_one_val == 7)
+				{
+					printf("-> Miejsce przebywania: ");
+					if (tab->room == 0) printf("Magazyn"); else printf("sala nr %d", tab->room);
+
+					printf(" => ");
+
+					if (room == 0) printf("Magazyn"); else printf("sala nr %d", room);
+				}
+
 
 				letter = NULL;
-				scanf("%c", &letter); // skipping null value 
+				if (edit_one_val != 1 && edit_one_val != 2) scanf("%c", &letter); // skipping null value 
 
 				printf("\n\n Czy zapisane dane sa poprawne (y/n): ");
-				
+
 				scanf("%c", &letter);
 			} while (tolower(letter) != 'y' && tolower(letter) != 'n');
 
@@ -1069,7 +1245,7 @@ lib* load_lib_from_file(char fname[]) // loading db file
 
 		if ((buf[0] == ';' || buf[0] == '\0') && breakpoint == 10) // ending the line and reseting important variables
 		{
-			if (!wrongdata) 
+			if (!wrongdata)
 			{
 				tab = add_lib(tab, title, descr, yearofexistence, century, weight, day, month, year, state, room); // saving correct data
 			}
@@ -1098,7 +1274,7 @@ void save_lib_to_file(char fname[], lib* tab) // saving entire db to a file with
 	if (tab == NULL) return; // if db is empty 
 
 	FILE* file = fopen(fname, "w");
-	
+
 	if (file == NULL) // if file is not opened
 	{
 		printf("\n\nZapis nie zostal wykonany plik bazy danych nie jest dostępny.\n\n");
@@ -1124,7 +1300,7 @@ void room_list(lib* tab)
 		return;
 	}
 
-	
+
 	usint rooms[LIM_ROOM + 1]; // how many exhibits been in room 'x'
 	usint sum = 0;			   // sum of exhibits in any room
 
@@ -1164,7 +1340,7 @@ void room_list(lib* tab)
 	return;
 }
 
-lib* user_add_to_lib(lib* tab) 
+lib* user_add_to_lib(lib* tab)
 {
 	//if (tab == NULL) return tab; // if list is empty
 
@@ -1318,7 +1494,7 @@ int show_by_name(lib* tab, uchar str[]) // showing all exhibits who have special
 
 	while (tab != NULL)
 	{
-		if (!strcmp(tab->title, str))
+		if (str_cmp_ch(tab->title, str))
 		{
 			if (!first)
 			{
@@ -1473,7 +1649,7 @@ float get_weight_from_user() // getting secured weight from user
 	float weight;
 	bool faildetected = false;
 
-	do 
+	do
 	{
 		system("cls");
 
@@ -1597,6 +1773,51 @@ usint get_room_from_user() // getting secured room from user
 	return room;
 }
 
+int str_cmp_ch(char strT[], char strP[])
+{
+	int lenT = strlen(strT),
+		lenP = strlen(strP);
+	bool is_part = false,
+		skip = false;
+
+	if (lenT < lenP)
+	{
+		return 0;
+	}
+	else if (lenT == lenP)
+	{
+		return !strcpy(lenT, lenP);
+	}
+
+	for (int i = 0, j = 0; i < lenT; i++)
+	{
+		if (skip)
+		{
+			if (strT[i] == ' ')
+			{
+				skip = false;
+			}
+			j = 0;
+			continue;
+		}
+
+		if (tolower(strT[i]) == tolower(strP[j]) && !skip)
+		{
+			j++;
+			if (j == lenP) return 1;
+			is_part = true;
+			continue;
+		}
+		else
+		{
+			is_part = false;
+			skip = true;
+		}
+
+	}
+	return 0;
+}
+
 void user_get_by_id(lib* tab)  // getting list of exhibit with special id
 {
 	if (length_list == 0)
@@ -1615,7 +1836,7 @@ void user_get_by_id(lib* tab)  // getting list of exhibit with special id
 	return;
 }
 
-void user_edit_by_id(lib* tab) // edit exhibit with special id
+void user_edit_by_id(lib* tab, ulint id, int edit_one_value) // edit exhibit with special id
 {
 	if (length_list == 0)
 	{
@@ -1623,10 +1844,8 @@ void user_edit_by_id(lib* tab) // edit exhibit with special id
 		return;
 	}
 
-	ulint id = get_id_from_user();
-
 	system("cls");
-	edit_val_lib(tab, id);
+	edit_val_lib(tab, id, edit_one_value);
 
 	return;
 }
